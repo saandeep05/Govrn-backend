@@ -14,10 +14,13 @@ public class Person extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String aadhaarNumber;
 
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
     private UserRole role;
@@ -25,7 +28,7 @@ public class Person extends BaseEntity {
     private Boolean isActive;
 
     @ManyToOne
-    @JoinColumn(name = "region_id")
+    @JoinColumn(name = "region_id", nullable = false)
     private Region region;
 
     @ManyToMany(mappedBy = "managers")

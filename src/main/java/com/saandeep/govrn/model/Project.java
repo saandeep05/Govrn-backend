@@ -1,6 +1,5 @@
 package com.saandeep.govrn.model;
 
-import com.saandeep.govrn.util.enums.ProjectStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,10 +15,13 @@ public class Project extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String description;
 
+    @Column(nullable = false)
     private LocalDateTime proposedDate;
 
     private LocalDateTime startDate;
@@ -31,13 +33,11 @@ public class Project extends BaseEntity {
 
     @ManyToMany
     @JoinTable(name = "project_managed",
-    joinColumns = @JoinColumn(name = "project_id"),
-    inverseJoinColumns = @JoinColumn(name = "person_id"))
+    joinColumns = @JoinColumn(name = "project_id", nullable = false),
+    inverseJoinColumns = @JoinColumn(name = "person_id", nullable = false))
     private Set<Person> managers;
 
     @ManyToOne
-    @JoinColumn(name = "region_id")
+    @JoinColumn(name = "region_id", nullable = false)
     private Region region;
-
-    private Integer daysInStage;
 }
