@@ -2,12 +2,16 @@ package com.saandeep.govrn.model;
 
 import com.saandeep.govrn.util.enums.UserRole;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Person extends BaseEntity {
     @Id
     @Column(name = "person_id")
