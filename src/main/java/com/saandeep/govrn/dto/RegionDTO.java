@@ -3,10 +3,12 @@ package com.saandeep.govrn.dto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Data
 @Component
+@NoArgsConstructor
 @AllArgsConstructor
 public class RegionDTO {
     @NotBlank(message = "Area is required")

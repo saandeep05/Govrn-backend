@@ -3,12 +3,14 @@ package com.saandeep.govrn.dto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
 @Data
 @Component
+@NoArgsConstructor
 @AllArgsConstructor
 public class ProjectDTO {
     @NotBlank(message = "Project name is required")
