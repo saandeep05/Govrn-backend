@@ -18,4 +18,7 @@ public class RegionDTO {
 
     @NotBlank(message = "State is required")
     private String state;
+
+    @NotBlank(message = "Pin code is required")
+    private String pinCode;
 }
