@@ -48,16 +48,15 @@ public class RegionService {
     }
 
     public Region deleteRegion(Long id, boolean isSoft) {
+        Region region = getRegion(id);
+        if(region == null) return null;
+
         if(!isSoft) {
             regionRepository.deleteById(id);
             return null;
         }
 
-        Region region = regionRepository.findById(id).orElse(null);
-        if(region != null) {
-            region.setDeletedAt(LocalDateTime.now());
-            regionRepository.save(region);
-        }
-        return region;
+        region.setDeletedAt(LocalDateTime.now());
+        return regionRepository.save(region);
     }
 }
