@@ -28,4 +28,16 @@ public class PersonController {
         Person createdPerson = personService.createPerson(personDto);
         return new ResponseEntity<>(createdPerson, HttpStatus.CREATED);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Person> updateUser(@RequestBody Person person, @PathVariable Long id) {
+        Person updatedPerson = personService.updatePerson(id, person);
+        return new ResponseEntity<>(updatedPerson, HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Person> deleteUser(@PathVariable Long id) {
+        Person person = personService.deletePerson(id, true);
+        return new ResponseEntity<>(person, HttpStatus.OK);
+    }
 }

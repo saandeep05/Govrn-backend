@@ -8,6 +8,7 @@ import com.saandeep.govrn.util.enums.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -19,6 +20,10 @@ public class PersonService {
 
     public List<Person> getAllPersons() {
         return personRepository.findAll();
+    }
+
+    public Person getPerson(Long id) {
+        return personRepository.findById(id).orElse(null);
     }
 
     public Person createPerson(PersonDTO personDto) {
@@ -34,5 +39,28 @@ public class PersonService {
                 null
                 );
         return personRepository.save(person);
+    }
+
+    public Person updatePerson(Long personId, Person person) {
+        Person fetchedPerson = getPerson(personId);
+        if(fetchedPerson == null) {
+            return null;
+        }
+
+        person.setId(personId);
+        return personRepository.save(person);
+    }
+
+    public Person deletePerson(Long personId, boolean isSoft) {
+        Person fetchedPerson = getPerson(personId);
+        if(fetchedPerson == null) return null;
+
+        if(!isSoft) {
+            personRepository.deleteById(personId);
+            return fetchedPerson;
+        }
+
+        fetchedPerson.setDeletedAt(LocalDateTime.now());
+        return personRepository.save(fetchedPerson);
     }
 }
