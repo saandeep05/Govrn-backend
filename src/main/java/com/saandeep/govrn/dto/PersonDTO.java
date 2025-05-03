@@ -2,6 +2,7 @@ package com.saandeep.govrn.dto;
 
 import com.saandeep.govrn.util.enums.UserRole;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,9 +23,8 @@ public class PersonDTO {
     @NotBlank(message = "Password is required")
     private String password;
 
-    @NotBlank(message = "Role is required")
     private UserRole role;
 
-    @NotBlank(message = "Region id is required")
+    @NotNull(message = "Region id is required")
     private Long regionId;
 }

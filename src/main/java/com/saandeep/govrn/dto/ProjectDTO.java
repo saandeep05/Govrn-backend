@@ -1,6 +1,7 @@
 package com.saandeep.govrn.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,6 @@ public class ProjectDTO {
     @NotBlank(message = "Description is required")
     private String description;
 
-    @NotBlank(message = "Proposed date is required")
+    @NotNull(message = "Proposed date is required")
     private LocalDateTime proposedDate;
 }
