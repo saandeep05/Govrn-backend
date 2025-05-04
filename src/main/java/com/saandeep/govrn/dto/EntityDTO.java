@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResponseDTO<T> {
+public class EntityDTO<T> {
     private List<String> errors;
     private String message;
     private T data;
