@@ -1,5 +1,6 @@
 package com.saandeep.govrn.controller;
 
+import com.saandeep.govrn.dto.EntityDTO;
 import com.saandeep.govrn.dto.PersonDTO;
 import com.saandeep.govrn.model.Person;
 import com.saandeep.govrn.service.PersonService;
@@ -39,5 +40,11 @@ public class PersonController {
     public ResponseEntity<Person> deleteUser(@PathVariable Long id) {
         Person person = personService.deletePerson(id, true);
         return new ResponseEntity<>(person, HttpStatus.OK);
+    }
+
+    @PostMapping("/managers/add/{aadhaarNumber}")
+    public ResponseEntity<EntityDTO<Person>> addManager(@PathVariable String aadhaarNumber) {
+        EntityDTO<Person> entityDTO = personService.addManager(aadhaarNumber);
+        return new ResponseEntity<>(entityDTO, HttpStatus.OK);
     }
 }
