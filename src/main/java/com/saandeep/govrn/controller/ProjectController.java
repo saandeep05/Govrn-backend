@@ -1,5 +1,6 @@
 package com.saandeep.govrn.controller;
 
+import com.saandeep.govrn.dto.EntityDTO;
 import com.saandeep.govrn.dto.ProjectDTO;
 import com.saandeep.govrn.model.Project;
 import com.saandeep.govrn.service.ProjectService;
@@ -33,5 +34,11 @@ public class ProjectController {
     public ResponseEntity<Project> createProject(@Valid @RequestBody ProjectDTO projectDTO, @PathVariable Long personId) {
         Project project = projectService.createProject(projectDTO, personId);
         return new ResponseEntity<>(project, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/assign/{projectId}/{personId}")
+    public ResponseEntity<EntityDTO<Project>> assignProject(@PathVariable Long projectId, @PathVariable Long personId) {
+        EntityDTO<Project> entityDTO = projectService.assignProjectTo(projectId, personId);
+        return new ResponseEntity<>(entityDTO, HttpStatus.OK);
     }
 }
