@@ -1,8 +1,10 @@
 package com.saandeep.govrn.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -12,10 +14,12 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Region extends BaseEntity {
     @Id
     @Column(name = "region_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @Column(nullable = false)
@@ -34,8 +38,10 @@ public class Region extends BaseEntity {
     private String pinCode;
 
     @OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
+    @JsonBackReference
     private Set<Person> users;
 
     @OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
+    @JsonBackReference
     private Set<Project> projects;
 }

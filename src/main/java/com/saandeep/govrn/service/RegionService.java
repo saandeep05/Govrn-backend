@@ -1,13 +1,16 @@
 package com.saandeep.govrn.service;
 
 import com.saandeep.govrn.dto.RegionDTO;
+import com.saandeep.govrn.model.Project;
 import com.saandeep.govrn.model.Region;
 import com.saandeep.govrn.repository.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class RegionService {
@@ -58,5 +61,16 @@ public class RegionService {
 
         region.setDeletedAt(LocalDateTime.now());
         return regionRepository.save(region);
+    }
+
+    public void addProjectToRegion(Region region, Project newProject) {
+        Set<Project> projects = region.getProjects();
+        if(projects == null) {
+            projects = new HashSet<>();
+        }
+        projects.add(newProject);
+        region.setProjects(projects);
+
+        regionRepository.save(region);
     }
 }

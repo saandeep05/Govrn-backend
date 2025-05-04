@@ -2,6 +2,7 @@ package com.saandeep.govrn.service;
 
 import com.saandeep.govrn.dto.PersonDTO;
 import com.saandeep.govrn.model.Person;
+import com.saandeep.govrn.model.Project;
 import com.saandeep.govrn.model.Region;
 import com.saandeep.govrn.repository.PersonRepository;
 import com.saandeep.govrn.util.enums.UserRole;
@@ -9,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class PersonService {
@@ -62,5 +65,15 @@ public class PersonService {
 
         fetchedPerson.setDeletedAt(LocalDateTime.now());
         return personRepository.save(fetchedPerson);
+    }
+
+    public void addProjectToManager(Person manager, Project newProject) {
+        Set<Project> projects = manager.getProjects();
+        if(projects == null) {
+            projects = new HashSet<>();
+        }
+        projects.add(newProject);
+        manager.setProjects(projects);
+        personRepository.save(manager);
     }
 }
