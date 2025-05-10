@@ -37,4 +37,8 @@ public class ProjectStatusMetaDataService {
 
         return project;
     }
+
+    public ProjectStatusMetaData getLatestStageData(Long projectId) {
+        return projectStatusMetaDataRepository.findLatestStageData(projectId);
+    }
 }

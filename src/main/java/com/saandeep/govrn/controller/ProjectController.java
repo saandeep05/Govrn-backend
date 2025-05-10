@@ -41,4 +41,10 @@ public class ProjectController {
         EntityDTO<Project> entityDTO = projectService.assignProjectTo(projectId, personId);
         return new ResponseEntity<>(entityDTO, HttpStatus.OK);
     }
+
+    @PostMapping("/nextStage/{projectId}")
+    public ResponseEntity<EntityDTO<Project>> gotoNextStage(@PathVariable Long projectId) {
+        EntityDTO<Project> entityDTO = projectService.transitionToNextStage(projectId);
+        return new ResponseEntity<>(entityDTO, HttpStatus.OK);
+    }
 }

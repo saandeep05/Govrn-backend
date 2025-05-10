@@ -108,4 +108,28 @@ public class ProjectService extends BaseService<Project> {
 
         return getResponseDTO(errors, "", project);
     }
+
+    public EntityDTO<Project> transitionToNextStage(Long projectId) {
+        List<String> errors = new ArrayList<>();
+
+        Project project = projectRepository.findById(projectId).orElse(null);
+        if(project == null) {
+            errors.add(getEntityNotFound(Project.class));
+            return getResponseDTO(errors, Texts.PROJECT_NOT_FOUND, null);
+        }
+
+        ProjectStatusMetaData psmd = statusMetaDataService.getLatestStageData(projectId);
+        ProjectStatus status = psmd.getStatus();
+
+        if(status == ProjectStatus.ABANDONED || status == ProjectStatus.PROJECT_COMPLETED) {
+            errors.add(getEntityNotFound(ProjectStatus.class));
+            return getResponseDTO(errors, Texts.TRANSITION_NOT_POSSIBLE, project);
+        }
+
+        status = ProjectStatus.getStageFromInteger(status.ordinal()+1);
+        project = statusMetaDataService.createAndAddStatusMetaData(project, status);
+        project = projectRepository.save(project);
+
+        return getResponseDTO(null, "", project);
+    }
 }
