@@ -4,4 +4,5 @@ public class Texts {
     public static final String USER_NOT_FOUND = "User not found";
     public static final String PROJECT_NOT_FOUND = "Project not found";
     public static final String TRANSITION_NOT_POSSIBLE = "Transition is not possible";
+    public static final String VOTING_IN_PROGRESS = "Voting In Progress";
 }

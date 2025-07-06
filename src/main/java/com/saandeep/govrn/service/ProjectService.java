@@ -132,4 +132,29 @@ public class ProjectService extends BaseService<Project> {
 
         return getResponseDTO(null, "", project);
     }
+
+    public EntityDTO<List<Project>> startVoting(LocalDateTime startDate, List<Long> projectIdList) {
+        List<String> errors = new ArrayList<>();
+
+        List<Project> projects = projectRepository.findAllById(projectIdList);
+        List<Long> newProjectIdList = new ArrayList<>();
+
+        for(int i=0;i<projects.size();i++) {
+            Project project = projects.get(i);
+            ProjectStatusMetaData statusMetaData = statusMetaDataService.getLatestStageData(project.getId());
+
+            if(statusMetaData.getStatus() != ProjectStatus.VOTING_NOT_STARTED) {
+                errors.add(project.getId().toString());
+                continue;
+            }
+
+            newProjectIdList.add(project.getId());
+            Project updatedProject = statusMetaDataService.createAndAddStatusMetaData(project, ProjectStatus.VOTING_IN_PROGRESS);
+            updatedProject = projectRepository.save(updatedProject);
+            projects.set(i, updatedProject);
+        }
+
+        projectRepository.updateStartDate(startDate, projectIdList);
+        return new EntityDTO<>(errors, Texts.TRANSITION_NOT_POSSIBLE + " to " + Texts.VOTING_IN_PROGRESS, projects);
+    }
 }
